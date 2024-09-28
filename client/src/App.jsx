@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './App.css';
 
 
+
 function App() {
 
   const [nombre, setNombre] = useState("");
@@ -67,7 +68,7 @@ function App() {
                   <th>#</th>
                   <th>Nombre</th>
                   <th>Edad</th>
-                  <th>Ciudad</th>
+                  <th>Contrasena</th>
               </tr>
           </thead>
           <tbody>
