@@ -9,7 +9,15 @@ function App() {
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
 
+  const [listaUsuarios, setUsuarios] = useState([]);
+
+
+
   const add = () => {
+    if (nombre.trim() === "" || correo.trim() === "" || contrasena.trim() === "") {
+      alert("Por favor, completa todos los campos.");
+      return;
+    }
     Axios.post("http://localhost:3001/create",{
       nombre:nombre,
       correo:correo,
@@ -17,7 +25,15 @@ function App() {
     }).then(()=>{
       alert("Usuario Registrado");
     });
+
   }
+
+  const getUsuarios = () => {
+    Axios.get("http://localhost:3001/usuarios").then((response)=>{
+      setUsuarios(response.data);
+    });
+  }
+  getUsuarios();
 
   return (
     <div className='App'>
@@ -42,6 +58,37 @@ function App() {
         type="text" /></label>
 
         <button onClick={add}>Registrarse</button>
+      </div>
+      <div className="listaUsuarios">
+
+        <table>
+          <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Edad</th>
+                  <th>Ciudad</th>
+              </tr>
+          </thead>
+          <tbody>
+            {
+              listaUsuarios.map((val)=>{
+                return <tr key={val.id}>
+                        <td>{val.id}</td>
+                        <td>{val.nombre}</td>
+                        <td>{val.correo}</td>
+                        <td>{val.contrasena}</td>
+                      </tr>
+              })
+            }
+              
+          </tbody>
+          <tfoot>
+              <tr>
+              </tr>
+          </tfoot>
+        </table>
+
       </div>
     </div>
   )

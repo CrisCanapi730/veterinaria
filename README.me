@@ -1,0 +1,19 @@
+- Para la creacion de la base de datos
+
+codigo SQL a ejecutar:
+----------------------------------------
+
+CREATE DATABASE veterinaria;
+USE veterinaria;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    nombre VARCHAR(50) NOT NULL,
+    correo VARCHAR(50) NOT NULL,
+    contrasena VARCHAR(50) NOT NULL
+);
+
+INSERT INTO usuarios (nombre, email, password) VALUES
+('Juan Perez', 'juan@example.com', '1234'),
+('Maria Lopez', 'maria@example.com', 'abcd'),
+('Carlos Ruiz', 'carlos@example.com', '5678');
