@@ -155,6 +155,76 @@ app.delete("/deleteMascota/:id", (req, res) => {
 });
 
 
+// BACKEND productos
+
+
+// Crear un producto
+app.post("/createProducto", (req, res) => {
+    const { nombre, descripcion, precio } = req.body;
+
+    db.query(
+        'INSERT INTO productos(nombre, descripcion, precio) VALUES(?,?,?)',
+        [nombre, descripcion, precio],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al registrar el producto");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+// Obtener todos los productos
+app.get("/productos", (req, res) => {
+    db.query('SELECT * FROM productos',
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al cargar los productos");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+// Actualizar un producto
+app.put("/updateProducto", (req, res) => {
+    const { nombre, descripcion, precio, cod } = req.body;
+
+    db.query(
+        'UPDATE productos SET nombre=?, descripcion=?, precio=? WHERE cod=?',
+        [nombre, descripcion, precio, cod],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al actualizar el producto");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+// Eliminar un producto
+app.delete("/deleteProducto/:cod", (req, res) => {
+    const cod = req.params.cod;
+    db.query(
+        'DELETE FROM productos WHERE cod=?', [cod],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al eliminar el producto");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+
 app.listen(3001, () => {
     console.log("Corriendo en el puerto 3001");
 });
