@@ -1,5 +1,4 @@
-// Header.js
-import './Header.css'; // Importa el CSS específico para el header
+import './styles/Header.css';
 
 const Header = () => {
     return (
@@ -7,9 +6,9 @@ const Header = () => {
             <h1>Veterinaria Patito</h1>
             <nav>
                 <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/about">Acerca de</a></li>
-                    <li><a href="/contact">Contacto</a></li>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Acerca de</a></li>
+                    <li><a href="#">Contacto</a></li>
                 </ul>
             </nav>
         </header>

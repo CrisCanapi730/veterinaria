@@ -1,5 +1,4 @@
-// Footer.js
-import './Footer.css'; // Importa el CSS específico para el footer
+import './styles/Footer.css';
 
 const Footer = () => {
     return (
@@ -7,9 +6,9 @@ const Footer = () => {
             <p>© 2024 Mi Página Web. Todos los derechos reservados.</p>
             <nav>
                 <ul>
-                    <li><a href="/privacy">Política de Privacidad</a></li>
-                    <li><a href="/terms">Términos de Servicio</a></li>
-                    <li><a href="/contact">Contacto</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="#">Términos de Servicio</a></li>
+                    <li><a href="#">Contacto</a></li>
                 </ul>
             </nav>
         </footer>
