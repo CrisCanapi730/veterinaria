@@ -1,4 +1,18 @@
-/* Header.css */
+/* Contenedor para el logo y el título */
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+/* Logo del patito */
+.logo-img {
+    inline-size: 50px; /* Ajusta el ancho según tu necesidad */
+    block-size: auto; /* Mantiene la proporción de la imagen */
+    margin-inline-end: 20px; /* Espacio entre la imagen y el título */
+    border-radius: 50%; /* Opcional: si quieres redondear la imagen */
+}
+
+/* Estilos existentes */
 * {
     margin: 0;
     padding: 0;
@@ -11,11 +25,11 @@ header {
     color: #fff;
     padding: 20px;
     display: flex;
-    justify-content: space-between; /* Espacio entre los elementos */
-    align-items: center; /* Alinea verticalmente los elementos */
-    inline-size: 100%; /* Ocupa todo el ancho del contenedor */
-    margin: 0; /* Elimina márgenes */
-    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    justify-content: space-between;
+    align-items: center;
+    inline-size: 100%;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 nav ul {

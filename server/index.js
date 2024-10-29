@@ -223,8 +223,94 @@ app.delete("/deleteProducto/:cod", (req, res) => {
         }
     );
 });
+// backend citas
 
+
+// BACKEND CITAS
+
+// Crear una cita
+app.post("/createCita", (req, res) => {
+    const { id_usuario, id_mascota, fecha, hora } = req.body;
+
+    db.query(
+        'INSERT INTO citas(id_usuario, id_mascota, fecha, hora) VALUES(?,?,?,?)',
+        [id_usuario, id_mascota, fecha, hora],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al registrar la cita");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+// Obtener todas las citas
+app.get("/citasLista", (req, res) => {
+    db.query('SELECT * FROM citas',
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al cargar las citas");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+// Actualizar una cita
+app.put("/updateCita", (req, res) => {
+    const { id_usuario, id_mascota, fecha, hora, id } = req.body;
+
+    db.query(
+        'UPDATE citas SET id_usuario=?, id_mascota=?, fecha=?, hora=? WHERE id=?',
+        [id_usuario, id_mascota, fecha, hora, id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al actualizar la cita");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+// Eliminar una cita
+app.delete("/deleteCita/:id", (req, res) => {
+    const id = req.params.id;
+    db.query(
+        'DELETE FROM citas WHERE id=?', [id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al eliminar la cita");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+// Obtener mascotas de un usuario
+app.get("/mascotasByUsuario/:id_usuario", (req, res) => {
+    const id_usuario = req.params.id_usuario;
+    db.query('SELECT * FROM mascotas WHERE id_usuario=?', [id_usuario],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error al cargar las mascotas del usuario");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
 
 app.listen(3001, () => {
     console.log("Corriendo en el puerto 3001");
 });
+
+

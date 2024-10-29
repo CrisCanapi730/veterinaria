@@ -4,16 +4,23 @@ import './styles/Header.css';
 const Header = () => {
     return (
         <header>
-        <h1>Veterinaria Patito</h1>
-        <nav>
-            <ul>
-            <li><Link to="/inicio">Inicio</Link></li>
-            <li><Link to="/usuarios">Usuarios</Link></li>
-            <li><Link to="/mascotas">Mascotas</Link></li>
-            <li><Link to="/productos">Productos</Link></li>
-            <li><a href="#">Citas</a></li>
-            </ul>
-        </nav>
+            <div className="logo-title">
+                <img
+                    src="https://img.freepik.com/vector-premium/patito-goma-bano-sobre-fondo-azul_546897-923.jpg"
+                    alt="Patito de goma"
+                    className="logo-img"
+                />
+                <h1>Veterinaria Patito</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><Link to="/inicio">Inicio</Link></li>
+                    <li><Link to="/usuarios">Usuarios</Link></li>
+                    <li><Link to="/mascotas">Mascotas</Link></li>
+                    <li><Link to="/productos">Productos</Link></li>
+                    <li><Link to="/citas">Citas</Link></li>
+                </ul>
+            </nav>
         </header>
     );
 };
