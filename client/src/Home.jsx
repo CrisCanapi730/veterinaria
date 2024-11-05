@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './styles/Home.css';
 
 const Home = () => {
+    
     const [dynamicText, setDynamicText] = useState('confiable');
     const [color, setColor] = useState('color1');
 
