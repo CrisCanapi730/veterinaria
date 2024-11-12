@@ -14,6 +14,8 @@ import { messaging } from './firebase';
 import './styles/App.css';
 import './styles/Footer.css';
 import './styles/Header.css';
+import GestionarCitas from "./GestionarCitas";
+import Ventas from "./Ventas";
 
 function App() {
   // Función de inicio de sesión anónimo
@@ -80,7 +82,11 @@ function App() {
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/mascotas" element={<Mascotas />} />
           <Route path="/productos" element={<Productos />} />
+          <Route path="/ventas" element={<Ventas />} />
+
           <Route path="/citas" element={<Citas />} />
+          <Route path="/gestionarCitas" element={<GestionarCitas />} />
+
         </Routes>
       </main>
       <Footer />

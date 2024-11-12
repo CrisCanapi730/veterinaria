@@ -12,7 +12,7 @@ const db = mysql.createConnection({
     user: "root",
     password: "122889Ccm",
     database: "veterinaria",
-    port: 3305,
+    port: 3306,
 });
 
 // BACKEND USUARIOS
@@ -158,13 +158,16 @@ app.delete("/deleteMascota/:id", (req, res) => {
 // BACKEND productos
 
 
+// BACKEND productos
+
+
 // Crear un producto
 app.post("/createProducto", (req, res) => {
-    const { nombre, descripcion, precio } = req.body;
+    const { nombre, descripcion, precio, contenido, cantidadUnidades, imagen } = req.body;
 
     db.query(
-        'INSERT INTO productos(nombre, descripcion, precio) VALUES(?,?,?)',
-        [nombre, descripcion, precio],
+        'INSERT INTO productos(nombre, descripcion, precio, contenido, cantidadUnidades, imagen) VALUES(?,?,?,?,?,?)',
+        [nombre, descripcion, precio, contenido, cantidadUnidades, imagen],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -192,11 +195,11 @@ app.get("/productos", (req, res) => {
 
 // Actualizar un producto
 app.put("/updateProducto", (req, res) => {
-    const { nombre, descripcion, precio, cod } = req.body;
+    const { nombre, descripcion, precio, contenido, cantidadUnidades, imagen, cod } = req.body;
 
     db.query(
-        'UPDATE productos SET nombre=?, descripcion=?, precio=? WHERE cod=?',
-        [nombre, descripcion, precio, cod],
+        'UPDATE productos SET nombre=?, descripcion=?, precio=?, contenido=?, cantidadUnidades=?, imagen=? WHERE cod=?',
+        [nombre, descripcion, precio, contenido, cantidadUnidades, imagen, cod],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -227,17 +230,15 @@ app.delete("/deleteProducto/:cod", (req, res) => {
 
 
 // BACKEND CITAS
-
-// Crear una cita
-app.post("/createCita", (req, res) => {
-    const { id_usuario, id_mascota, fecha, hora } = req.body;
+app.post("/createCitas", (req, res) => {
+    const { fecha, hora, id_mascota, id_usuario, especie, nivel_urgencia } = req.body;
 
     db.query(
-        'INSERT INTO citas(id_usuario, id_mascota, fecha, hora) VALUES(?,?,?,?)',
-        [id_usuario, id_mascota, fecha, hora],
+        'INSERT INTO citas(fecha, hora, id_mascota, id_usuario, especie, nivel_urgencia) VALUES(?,?,?,?,?,?)',
+        [fecha, hora, id_mascota, id_usuario, especie, nivel_urgencia],
         (err, result) => {
             if (err) {
-                console.log(err);
+                console.log (err);
                 return res.status(500).send("Error al registrar la cita");
             } else {
                 res.send(result);
@@ -246,8 +247,7 @@ app.post("/createCita", (req, res) => {
     );
 });
 
-// Obtener todas las citas
-app.get("/citasLista", (req, res) => {
+app.get("/citas", (req, res) => {
     db.query('SELECT * FROM citas',
         (err, result) => {
             if (err) {
@@ -260,13 +260,13 @@ app.get("/citasLista", (req, res) => {
     );
 });
 
-// Actualizar una cita
-app.put("/updateCita", (req, res) => {
-    const { id_usuario, id_mascota, fecha, hora, id } = req.body;
+app.put("/updateCitas/:id", (req, res) => {
+    const { fecha, hora, id_mascota, id_usuario, especie, nivel_urgencia } = req.body;
+    const id = req.params.id; // Obtener el ID de la cita desde los parámetros de la URL
 
     db.query(
-        'UPDATE citas SET id_usuario=?, id_mascota=?, fecha=?, hora=? WHERE id=?',
-        [id_usuario, id_mascota, fecha, hora, id],
+        'UPDATE citas SET fecha=?, hora=?, id_mascota=?, id_usuario=?, especie=?, nivel_urgencia=? WHERE id=?',
+        [fecha, hora, id_mascota, id_usuario, especie, nivel_urgencia, id],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -278,8 +278,7 @@ app.put("/updateCita", (req, res) => {
     );
 });
 
-// Eliminar una cita
-app.delete("/deleteCita/:id", (req, res) => {
+app.delete("/deleteCitas/:id", (req, res) => {
     const id = req.params.id;
     db.query(
         'DELETE FROM citas WHERE id=?', [id],
