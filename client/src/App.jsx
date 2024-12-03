@@ -1,7 +1,7 @@
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { getToken, onMessage } from 'firebase/messaging';
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import Citas from './Citas';
 import Footer from './Footer';
@@ -16,8 +16,12 @@ import './styles/Footer.css';
 import './styles/Header.css';
 import GestionarCitas from "./GestionarCitas";
 import Ventas from "./Ventas";
+import Login from "./Login";
 
 function App() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login" || location.pathname === "/"; // Definir la página predeterminada
+
   // Función de inicio de sesión anónimo
   const loginAnonymously = () => {
     signInAnonymously(getAuth())
@@ -41,7 +45,6 @@ function App() {
     }
   };
 
-  // Registrar el Service Worker
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
@@ -57,39 +60,41 @@ function App() {
     onMessage(messaging, (message) => {
       console.log("Mensaje en primer plano recibido:", message);
 
-      // Mostrar notificación push en el navegador
       if (Notification.permission === 'granted') {
         new Notification(message.notification.title, {
           body: message.notification.body,
-          icon: '/icon.png' // Asegúrate de tener un icono en tu proyecto
+          icon: '/icon.png'
         });
       } else {
-        toast(message.notification.title); // Fallback en caso de que las notificaciones no estén habilitadas
+        toast(message.notification.title);
       }
     });
   }, []);
 
   return (
     <div className="App">
-      <Header />
+      {!isLoginPage && <Header />}
       <main>
         <ToastContainer />
-        <button onClick={loginAnonymously}>Iniciar sesión anónimo</button>
-        <button onClick={enableNotifications}>Habilitar notificaciones</button>
+        {!isLoginPage && (
+          <>
+            <button onClick={loginAnonymously}>Iniciar sesión anónimo</button>
+            <button onClick={enableNotifications}>Habilitar notificaciones</button>
+          </>
+        )}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} /> {/* Asegurando que el login sea la ruta por defecto */}
           <Route path="/inicio" element={<Home />} />
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/mascotas" element={<Mascotas />} />
           <Route path="/productos" element={<Productos />} />
           <Route path="/ventas" element={<Ventas />} />
-
           <Route path="/citas" element={<Citas />} />
           <Route path="/gestionarCitas" element={<GestionarCitas />} />
-
+          <Route path="/login" element={<Login />} />
         </Routes>
       </main>
-      <Footer />
+      {!isLoginPage && <Footer />}
     </div>
   );
 }

@@ -7,6 +7,7 @@ function Usuarios(){
     // Estados para Usuarios
     const [nombre, setNombre] = useState("");
     const [correo, setCorreo] = useState("");
+    const [rol, setRol] = useState("");
     const [contrasena, setContrasena] = useState("");
     const [editar, setEditar] = useState(false);
     const [listaUsuarios, setUsuarios] = useState([]);
@@ -19,14 +20,15 @@ function Usuarios(){
 
     // Funciones para usuarios
     const add = () => {
-        if (nombre.trim() === "" || correo.trim() === "" || contrasena.trim() === "") {
+        if (nombre.trim() === "" || correo.trim() === "" || contrasena.trim() === "" || rol.trim() === "") {
         alert("Por favor, completa todos los campos.");
         return;
         }
         Axios.post("http://localhost:3001/create",{
         nombre:nombre,
         correo:correo,
-        contrasena:contrasena
+        contrasena:contrasena,
+        rol:rol
         }).then(()=>{
         alert("Usuario Registrado");
         limpiarDatos();
@@ -39,7 +41,8 @@ function Usuarios(){
         id:id,
         nombre:nombre,
         correo:correo,
-        contrasena:contrasena
+        contrasena:contrasena,
+        rol:rol
         }).then(()=>{
         getUsuarios();
         alert("Usuario Actualizado");
@@ -71,6 +74,7 @@ function Usuarios(){
         setNombre(val.nombre);
         setCorreo(val.correo);
         setContrasena(val.contrasena);
+        setRol(val.rol);
         setId(val.id);
     }
 
@@ -102,6 +106,12 @@ function Usuarios(){
             }}
             type="text" placeholder="Ingresa tu contrasena"/></label>
 
+            <label htmlFor="">Rol: <input value={rol} 
+            onChange={(event)=>{
+            setRol(event.target.value);
+            }}
+            type="text" placeholder="Ingresa un rol"/></label>
+
             <div>
             {
                 editar?(
@@ -126,6 +136,7 @@ function Usuarios(){
                     <th>Nombre</th>
                     <th>Edad</th>
                     <th>Contrasena</th>
+                    <th>Rol</th>
                     <th>Accion</th>
                 </tr>
             </thead>
@@ -137,6 +148,7 @@ function Usuarios(){
                             <td>{val.nombre}</td>
                             <td>{val.correo}</td>
                             <td>{val.contrasena}</td>
+                            <td>{val.rol}</td>
                             <td>
                             <div>
                                 <button onClick={()=>{

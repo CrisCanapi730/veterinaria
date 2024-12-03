@@ -19,10 +19,9 @@ const Header = () => {
                     <li><Link to="/mascotas">Mascotas</Link></li>
                     <li><Link to="/productos">Productos</Link></li>
                     <li><Link to="/ventas">Ventas</Link></li>
-
                     <li><Link to="/citas">Citas</Link></li>
                     <li><Link to="/gestionarCitas">Gestionar Citas</Link></li>
-
+                    <li><Link to="/login">Cerrar Sesion</Link></li>
                 </ul>
             </nav>
         </header>

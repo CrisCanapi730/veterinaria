@@ -21,11 +21,13 @@ app.post("/create", (req, res) => {
     const nombre = req.body.nombre;
     const correo = req.body.correo;
     const contrasena = req.body.contrasena;
+    const rol = req.body.rol;
+
 
 
     db.query(
-        'INSERT INTO usuarios(nombre, correo, contrasena) VALUES(?,?,?)',
-        [nombre, correo, contrasena],
+        'INSERT INTO usuarios(nombre, correo, contrasena, rol) VALUES(?,?,?,?)',
+        [nombre, correo, contrasena, rol],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -56,10 +58,12 @@ app.put("/update", (req, res) => {
     const correo = req.body.correo;
     const contrasena = req.body.contrasena;
     const id = req.body.id;
+    const rol = req.body.rol;
+
 
     db.query(
-        'UPDATE usuarios SET nombre=?, correo=?, contrasena=? WHERE id=?',
-        [nombre, correo, contrasena, id],
+        'UPDATE usuarios SET nombre=?, correo=?, contrasena=?, rol=? WHERE id=?',
+        [nombre, correo, contrasena, rol, id],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -307,6 +311,35 @@ app.get("/mascotasByUsuario/:id_usuario", (req, res) => {
         }
     );
 });
+
+app.post("/login", (req, res) => {
+    const { correo, contrasena } = req.body;
+
+    db.query(
+        "SELECT id, rol FROM usuarios WHERE correo = ? AND contrasena = ?",
+        [correo, contrasena],
+        (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send("Error en el servidor");
+            }
+            if (result.length > 0) {
+                const user = result[0];
+                res.status(200).json({
+                    message: "Inicio de sesión exitoso",
+                    usuario: user, // Devuelve el usuario (id y rol)
+                });
+            } else {
+                res.status(401).send("Usuario o contraseña incorrectos");
+            }
+        }
+    );
+});
+
+
+
+
+
 
 app.listen(3001, () => {
     console.log("Corriendo en el puerto 3001");
