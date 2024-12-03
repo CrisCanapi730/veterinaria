@@ -18,6 +18,7 @@ import GestionarCitas from "./GestionarCitas";
 import Ventas from "./Ventas";
 import Login from "./Login";
 
+
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/login" || location.pathname === "/"; // Definir la página predeterminada
